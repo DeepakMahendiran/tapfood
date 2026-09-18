@@ -14,8 +14,8 @@ import com.tap.utility.DBConnection;
 
 public class RestaurantDAOImpl implements RestaurantDAO {
 	
-	String insert="insert into Restaurant(name,cuisineType,DeliveryTime,Address,adminUserId,Rating,IsActive,ImagePath)values(?,?,?,?,?,?,?,?)";
-	String GETRESTAURANT="select * from Restaurant where restaurantId=?";
+	String insert="insert into restaurant(name,cuisineType,DeliveryTime,Address,adminUserId,Rating,IsActive,ImagePath)values(?,?,?,?,?,?,?,?)";
+	String GETRESTAURANT="select * from restaurant where restaurantId=?";
 	String getall="select  * from restaurant";
 	String update="update restaurant set name=?, cuisineType=?, DeliveryTime=?, Address=?, adminUserId=?, Rating=?, IsActive=?, ImagePath=? where restaurantId=?";
 	String delete="delete from restaurant where restaurantId=?";

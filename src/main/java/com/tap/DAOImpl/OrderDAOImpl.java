@@ -13,11 +13,11 @@ import com.tap.model.Order;
 import com.tap.utility.DBConnection;
 
 public class OrderDAOImpl implements OrderDAO{
-String INSERT="insert into OrderTable(userId,restaurantId,totalAmount,status,paymentMode,deliveryAddress)values(?,?,?,?,?,?)";
-String GET="select * from orderTable where orderId=?";
-String GETALL="select * from orderTable";
-String UPDATE="update orderTable set userId=?,restaurantId=?,totalAmount=?,status=?,paymentMode=? where orderId=?";
-String DELETE="delete from orderTable where orderId=?";
+String INSERT="insert into ordertable(userId,restaurantId,totalAmount,status,paymentMode,deliveryAddress)values(?,?,?,?,?,?)";
+String GET="select * from ordertable where orderId=?";
+String GETALL="select * from ordertable";
+String UPDATE="update ordertable set userId=?,restaurantId=?,totalAmount=?,status=?,paymentMode=? where orderId=?";
+String DELETE="delete from ordertable where orderId=?";
 	@Override
 	public int addOrder(Order order) {
 		try(Connection con = DBConnection.getConnection();

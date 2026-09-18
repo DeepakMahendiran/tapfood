@@ -14,11 +14,11 @@ import com.tap.utility.DBConnection;
 public class UserDAOImpl implements UserDAO  {
 	String INSERT="Insert into user(userName,email,password,address,role,createdDate,lastLoginDate)values(?,?,?,?,?,?,?) ";
 	String GETUSER="select * from user where userId=?";
-	String GETALL="SELECT * FROM USER";
-	String DELETE="DELETE FROM USER WhERE UserId=?";
-	String UPDATE="UPDATE USER SET USERNAME=? ,EMAIL=?,PASSWORD=?,ADDRESS=?,LASTLOGINDATE=? WHERE USERID=?";
+	String GETALL="SELECT * FROM user";
+	String DELETE="DELETE FROM user WhERE UserId=?";
+	String UPDATE="UPDATE user SET USERNAME=? ,EMAIL=?,PASSWORD=?,ADDRESS=?,LASTLOGINDATE=? WHERE USERID=?";
 	String GETUSERBYNAME="select * from user where userName=?";
-	String GETUSERBYEMAIL = "SELECT * FROM USER WHERE email = ?";
+	String GETUSERBYEMAIL = "SELECT * FROM user WHERE email = ?";
 
 	@Override
 	public void addUser(User user) {
