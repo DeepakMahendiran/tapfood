@@ -28,3 +28,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+# Local database dumps
+# schema_actual.sql was generated with `mysqldump --no-data` to verify
+# database/schema.sql against the live database. Dumps are machine-local and may
+# contain data, so they are never committed.
+*_actual.sql
+*.dump
