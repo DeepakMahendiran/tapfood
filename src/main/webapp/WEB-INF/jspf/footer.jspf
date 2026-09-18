@@ -1,0 +1,40 @@
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand"><i class="fa-solid fa-burger"></i>TapFood</div>
+      <p>Order from your favourite local restaurants,<br>delivered hot to your doorstep.</p>
+    </div>
+    <div class="footer-links">
+      <a href="restaurant">Restaurants</a>
+      <a href="orderHistory.jsp">My Orders</a>
+      <a href="cart.jsp">Cart</a>
+      <a href="profile.jsp">Account</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 TapFood. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+AOS.init({ duration: 500, once: true, offset: 40 });
+
+function confirmLogout(e) {
+  e.preventDefault();
+  const href = e.currentTarget.href;
+  Swal.fire({
+    title: 'Log out?',
+    text: 'You will need to sign in again to order.',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e8590c',
+    cancelButtonColor: '#a0aec0',
+    confirmButtonText: 'Yes, log out'
+  }).then((result) => {
+    if (result.isConfirmed) window.location.href = href;
+  });
+  return false;
+}
+</script>

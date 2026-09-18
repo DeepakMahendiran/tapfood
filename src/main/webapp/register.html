@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — TapFood</title>
+<meta name="description" content="Join TapFood and order delicious food from restaurants near you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+
+body {
+  background: radial-gradient(circle at 15% 50%, rgba(255,107,53,0.08) 0%, transparent 50%),
+              radial-gradient(circle at 85% 20%, rgba(255,145,77,0.06) 0%, transparent 50%),
+              #f7f5f2;
+  min-height: 100vh; display:flex; justify-content:center; align-items:center; padding: 30px 20px;
+}
+
+.card {
+  width: 1020px; max-width: 100%; display:flex; background:white;
+  border-radius: 28px; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+}
+
+/* Left panel */
+.panel-left {
+  width: 40%;
+  background: linear-gradient(145deg, #ff6b35 0%, #ff914d 60%, #ffb347 100%);
+  color: white; padding: 56px 40px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.panel-left::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 250px; height: 250px; background: rgba(255,255,255,0.08); border-radius: 50%;
+}
+.panel-left::after {
+  content: ''; position: absolute; bottom: -60px; left: -60px;
+  width: 200px; height: 200px; background: rgba(255,255,255,0.06); border-radius: 50%;
+}
+.brand { font-size: 30px; font-weight: 800; margin-bottom: 28px; position: relative; z-index: 1; }
+.panel-left h2 { font-size: 24px; font-weight: 700; margin-bottom: 10px; position: relative; z-index: 1; }
+.panel-left p { font-size: 14px; line-height: 1.8; opacity: 0.92; margin-bottom: 28px; position: relative; z-index: 1; }
+.feature-list { list-style: none; position: relative; z-index: 1; }
+.feature-list li {
+  background: rgba(255,255,255,0.14); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25); border-radius: 14px;
+  padding: 11px 16px; margin-bottom: 10px; font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 12px; transition: all 0.3s ease;
+}
+.feature-list li:hover { background: rgba(255,255,255,0.22); transform: translateX(6px); }
+
+/* Right panel */
+.panel-right {
+  width: 60%; padding: 48px 50px;
+  display: flex; flex-direction: column; justify-content: center;
+  max-height: 100vh; overflow-y: auto;
+}
+.panel-right h2 { font-size: 26px; font-weight: 800; color: #1a202c; margin-bottom: 4px; }
+.subtitle { font-size: 14px; color: #718096; margin-bottom: 28px; }
+
+/* Progress bar */
+.progress-bar {
+  height: 4px; background: #f0f0f0; border-radius: 4px; margin-bottom: 28px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, #ff6b35, #f05a1a);
+  border-radius: 4px; width: 0%; transition: width 0.4s ease;
+}
+
+/* Form grid */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid .full { grid-column: 1 / -1; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #718096;
+}
+.input-wrap { position: relative; }
+.input-wrap input,
+.input-wrap textarea,
+.input-wrap select {
+  width: 100%; padding: 12px 42px 12px 16px;
+  border: 1.5px solid #e2e8f0; background: #f8fafc;
+  border-radius: 12px; font-size: 14px; color: #2d3748;
+  font-family: 'Poppins', sans-serif; transition: all 0.25s ease; resize: none;
+}
+.input-wrap textarea { padding: 12px 16px; }
+.input-wrap select { padding: 12px 16px; }
+.input-wrap input:focus,
+.input-wrap textarea:focus,
+.input-wrap select:focus {
+  outline: none; border-color: #ff6b35; background: white;
+  box-shadow: 0 0 0 3px rgba(255,107,53,0.12);
+}
+.input-wrap input.error-field { border-color: #e53e3e; background: #fff5f5; }
+.input-wrap input.valid-field { border-color: #10b981; background: #f0fff4; }
+
+/* Icons inside input */
+.input-icon {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; pointer-events: none; color: #a0aec0;
+}
+.toggle-pass {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; font-size: 16px; color: #a0aec0;
+  padding: 0; transition: color 0.2s ease;
+}
+.toggle-pass:hover { color: #ff6b35; }
+
+.field-error { font-size: 11px; color: #e53e3e; font-weight: 500; display: none; }
+.field-error.visible { display: block; }
+
+/* Password strength */
+.strength-bar { display: flex; gap: 4px; margin-top: 6px; }
+.strength-seg { height: 4px; border-radius: 4px; flex: 1; background: #e2e8f0; transition: background 0.3s ease; }
+.strength-label { font-size: 11px; margin-top: 4px; font-weight: 600; }
+
+/* Terms */
+.terms-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: #4a5568; margin-top: 4px;
+}
+.terms-row input[type="checkbox"] {
+  width: 18px; height: 18px; margin: 0; flex-shrink: 0;
+  accent-color: #ff6b35; cursor: pointer;
+}
+.terms-row a { color: #ff6b35; text-decoration: none; font-weight: 600; }
+.terms-row a:hover { text-decoration: underline; }
+
+/* Submit */
+.submit-btn {
+  width: 100%; padding: 14px; border: none;
+  background: linear-gradient(135deg, #ff6b35, #f05a1a);
+  color: white; font-size: 15px; font-weight: 700;
+  border-radius: 14px; cursor: pointer; margin-top: 16px;
+  box-shadow: 0 5px 18px rgba(255,107,53,0.35);
+  transition: all 0.25s ease; font-family: 'Poppins', sans-serif;
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,0.45); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.footer-link { text-align: center; color: #718096; font-size: 13px; margin-top: 18px; }
+.footer-link a { color: #ff6b35; font-weight: 700; text-decoration: none; }
+.footer-link a:hover { text-decoration: underline; }
+
+@media (max-width: 820px) {
+  .card { flex-direction: column; }
+  .panel-left, .panel-right { width: 100%; }
+  .form-grid { grid-template-columns: 1fr; }
+  .panel-right { max-height: none; }
+}
+</style>
+</head>
+<body>
+<div class="card" data-aos="zoom-in">
+
+  <!-- Left -->
+  <div class="panel-left">
+    <div class="brand">🍔 TapFood</div>
+    <h2>Join TapFood Today!</h2>
+    <p>Create your account and start ordering from hundreds of restaurants. Enjoy exclusive deals, fast delivery and seamless experience.</p>
+    <ul class="feature-list">
+      <li>🍕 Thousands of Restaurants</li>
+      <li>🚀 30-min Fast Delivery</li>
+      <li>🎁 Exclusive Discounts</li>
+      <li>💳 100% Secure Payments</li>
+      <li>⭐ Easy Order Tracking</li>
+    </ul>
+  </div>
+
+  <!-- Right -->
+  <div class="panel-right">
+    <h2>Create Account</h2>
+    <p class="subtitle">Fill in your details to get started — it takes less than a minute!</p>
+
+    <!-- Password strength bar (hidden until typing password) -->
+    <div class="progress-bar" id="strengthBar" style="display:none;">
+      <div class="progress-fill" id="strengthFill"></div>
+    </div>
+
+    <form id="registerForm" action="Registration" method="post" novalidate>
+      <div class="form-grid">
+
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username">Username *</label>
+          <div class="input-wrap">
+            <input type="text" id="username" name="username"
+                   placeholder="Pick a username" autocomplete="username" minlength="3">
+            <span class="input-icon"><i class="fa-solid fa-user"></i></span>
+          </div>
+          <div class="field-error" id="err-username">Username must be at least 3 characters.</div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <div class="input-wrap">
+            <input type="email" id="email" name="email"
+                   placeholder="your@email.com" autocomplete="email">
+            <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
+          </div>
+          <div class="field-error" id="err-email">Please enter a valid email address.</div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <div class="input-wrap">
+            <input type="password" id="password" name="password"
+                   placeholder="Min. 6 characters" autocomplete="new-password">
+            <button type="button" class="toggle-pass" onclick="togglePass('password','eyePass1')" id="eyePass1"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <div class="strength-bar" id="strengthSegs" style="display:none;">
+            <div class="strength-seg" id="seg1"></div>
+            <div class="strength-seg" id="seg2"></div>
+            <div class="strength-seg" id="seg3"></div>
+            <div class="strength-seg" id="seg4"></div>
+          </div>
+          <div class="strength-label" id="strengthLabel" style="display:none;color:#718096;"></div>
+          <div class="field-error" id="err-password">Password must be at least 6 characters.</div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="confirmPass">Confirm Password *</label>
+          <div class="input-wrap">
+            <input type="password" id="confirmPass" name="confirmPass"
+                   placeholder="Re-enter password" autocomplete="new-password">
+            <button type="button" class="toggle-pass" onclick="togglePass('confirmPass','eyePass2')" id="eyePass2"><i class="fa-solid fa-eye"></i></button>
+          </div>
+          <div class="field-error" id="err-confirm">Passwords do not match.</div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group full">
+          <label for="address">Delivery Address *</label>
+          <div class="input-wrap">
+            <textarea id="address" name="address" rows="3"
+                      placeholder="House no., Street, Area, City..."></textarea>
+          </div>
+          <div class="field-error" id="err-address">Please enter your delivery address.</div>
+        </div>
+
+        <!-- Role -->
+        <div class="form-group full">
+          <label for="role">Register As *</label>
+          <div class="input-wrap">
+            <select id="role" name="role">
+              <option value="">-- Select Role --</option>
+              <option value="User">User (Customer)</option>
+              <option value="Admin">Admin</option>
+              <option value="Restaurant Owner">Restaurant Owner</option>
+            </select>
+          </div>
+          <div class="field-error" id="err-role">Please select a role.</div>
+        </div>
+
+        <!-- Terms -->
+        <div class="form-group full">
+          <div class="terms-row">
+            <input type="checkbox" id="terms" name="terms">
+            <label for="terms" style="font-size:13px;font-weight:normal;text-transform:none;letter-spacing:0;color:#4a5568;">
+              I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a>
+            </label>
+          </div>
+          <div class="field-error" id="err-terms">You must accept the terms to continue.</div>
+        </div>
+
+      </div>
+
+      <button type="submit" class="submit-btn" id="registerBtn">Create My Account →</button>
+    </form>
+
+    <div class="footer-link">
+      Already have an account? <a href="Login.jsp">Login Here</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Toggle password visibility
+function togglePass(fieldId, btnId) {
+  const field = document.getElementById(fieldId);
+  const btn   = document.getElementById(btnId);
+  field.type = field.type === 'password' ? 'text' : 'password';
+  btn.innerHTML = field.type === 'password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+}
+
+// Password strength checker
+const passField = document.getElementById('password');
+passField.addEventListener('input', function() {
+  const val = this.value;
+  document.getElementById('strengthSegs').style.display = val.length > 0 ? 'flex' : 'none';
+  document.getElementById('strengthLabel').style.display = val.length > 0 ? 'block' : 'none';
+
+  let score = 0;
+  if (val.length >= 6) score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val) || /[0-9]/.test(val)) score++;
+
+  const colors = ['#e53e3e','#ed8936','#ecc94b','#10b981'];
+  const labels = ['Weak','Fair','Good','Strong'];
+  ['seg1','seg2','seg3','seg4'].forEach((id, i) => {
+    document.getElementById(id).style.background = i < score ? colors[score-1] : '#e2e8f0';
+  });
+  const lbl = document.getElementById('strengthLabel');
+  lbl.textContent = score > 0 ? labels[score-1] : '';
+  lbl.style.color = colors[Math.max(0, score-1)];
+});
+
+// Validate email format
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Real-time email validation
+document.getElementById('email').addEventListener('input', function() {
+  if (isValidEmail(this.value.trim())) {
+    this.classList.add('valid-field'); this.classList.remove('error-field');
+    document.getElementById('err-email').classList.remove('visible');
+  } else {
+    this.classList.remove('valid-field');
+  }
+});
+
+// Real-time confirm password
+document.getElementById('confirmPass').addEventListener('input', function() {
+  if (this.value === document.getElementById('password').value && this.value.length > 0) {
+    this.classList.add('valid-field'); this.classList.remove('error-field');
+    document.getElementById('err-confirm').classList.remove('visible');
+  }
+});
+
+// Form submit validation
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  let valid = true;
+
+  const username    = document.getElementById('username').value.trim();
+  const email       = document.getElementById('email').value.trim();
+  const password    = document.getElementById('password').value;
+  const confirm     = document.getElementById('confirmPass').value;
+  const address     = document.getElementById('address').value.trim();
+  const role        = document.getElementById('role').value;
+  const terms       = document.getElementById('terms').checked;
+
+  // Clear all errors
+  document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    el.classList.remove('error-field'); el.classList.remove('valid-field');
+  });
+
+  // Username
+  if (username.length < 3) {
+    document.getElementById('err-username').classList.add('visible');
+    document.getElementById('username').classList.add('error-field');
+    valid = false;
+  } else document.getElementById('username').classList.add('valid-field');
+
+  // Email
+  if (!isValidEmail(email)) {
+    document.getElementById('err-email').textContent = email.length === 0
+      ? 'Email address is required.'
+      : 'Please enter a valid email (e.g. name@example.com).';
+    document.getElementById('err-email').classList.add('visible');
+    document.getElementById('email').classList.add('error-field');
+    valid = false;
+  } else document.getElementById('email').classList.add('valid-field');
+
+  // Password
+  if (password.length < 6) {
+    document.getElementById('err-password').classList.add('visible');
+    document.getElementById('password').classList.add('error-field');
+    valid = false;
+  } else document.getElementById('password').classList.add('valid-field');
+
+  // Confirm password
+  if (confirm !== password) {
+    document.getElementById('err-confirm').classList.add('visible');
+    document.getElementById('confirmPass').classList.add('error-field');
+    valid = false;
+  } else document.getElementById('confirmPass').classList.add('valid-field');
+
+  // Address
+  if (address.length < 5) {
+    document.getElementById('err-address').textContent = address.length === 0
+      ? 'Delivery address is required.'
+      : 'Address is too short.';
+    document.getElementById('err-address').classList.add('visible');
+    document.getElementById('address').classList.add('error-field');
+    valid = false;
+  }
+
+  // Role
+  if (!role) {
+    document.getElementById('err-role').classList.add('visible');
+    valid = false;
+  }
+
+  // Terms
+  if (!terms) {
+    document.getElementById('err-terms').classList.add('visible');
+    valid = false;
+  }
+
+  if (!valid) { e.preventDefault(); return; }
+
+  // Loading state
+  const btn = document.getElementById('registerBtn');
+  btn.disabled = true;
+  btn.textContent = 'Creating Account...';
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ duration: 600, once: true });</script>
+</body>
+</html>

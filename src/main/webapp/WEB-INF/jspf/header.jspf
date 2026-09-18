@@ -1,0 +1,29 @@
+<%@ page import="com.tap.model.User, com.tap.model.Cart" %>
+<%
+User navUser = (User) session.getAttribute("loggedInUser");
+Cart navCart = (Cart) session.getAttribute("cart");
+int navCartCount = (navCart != null) ? navCart.getItems().size() : 0;
+String activePage = (String) request.getAttribute("activePage");
+if (activePage == null) activePage = "";
+%>
+<header>
+
+    <div class="logo" onclick="location.href='restaurant'"><i class="fa-solid fa-burger"></i>TapFood</div>
+
+    <nav>
+        <a href="restaurant" class="<%="restaurant".equals(activePage) ? "active" : ""%>">Restaurants</a>
+        <% if (navUser != null) { %>
+            <a href="orderHistory.jsp" class="<%="orders".equals(activePage) ? "active" : ""%>">Orders</a>
+            <a href="cart.jsp" class="<%="cart".equals(activePage) ? "active" : ""%>" style="position:relative;">
+                <i class="fa-solid fa-cart-shopping"></i>Cart
+                <% if (navCartCount > 0) { %><span class="nav-cart-badge"><%=navCartCount%></span><% } %>
+            </a>
+            <a href="profile.jsp" class="<%="profile".equals(activePage) ? "active" : ""%>"><i class="fa-regular fa-user"></i><%=navUser.getUserName() != null && !navUser.getUserName().isEmpty() ? navUser.getUserName().split(" ")[0] : "Profile"%></a>
+            <a href="Login.jsp?message=logout" class="logout-link" onclick="return confirmLogout(event)">Logout</a>
+        <% } else { %>
+            <a href="Login.jsp">Sign in</a>
+            <a href="register.html">Sign up</a>
+        <% } %>
+    </nav>
+
+</header>
